@@ -19,7 +19,7 @@ def click_button():
 
 def connect():
     cap = cv2.VideoCapture(0)
-    cap.isOpened()
+    connected = cap.isOpened()
     update()
 
 def update():
