@@ -18,12 +18,14 @@ def click_button():
     cap.release()
 
 def connect():
+    global  connected
     cap = cv2.VideoCapture(0)
     connected = cap.isOpened()
     update()
 
 def update():
     if connected:
+        btn.state(["enabled"])
         text.insert(1.0, "Connection enabled")
         text.pack()
         btn.pack()
@@ -43,18 +45,18 @@ screen_height = root.winfo_screenheight()
 
 connected = False
 
-if connected:
-    btn = ttk.Button(text="Сделать снимок", state="enabled", command=click_button)
-    text = Text(width=20, height=3, bg="white", fg='black', wrap=WORD)
-    text.insert(1.0, "Connection enabled")
-    text.pack()
-    btn.pack()
-else:
-    btn = ttk.Button(text="Сделать снимок", state="disabled", command=click_button)
-    text = Text(width=20, height=3, bg="white", fg='black', wrap=WORD)
-    text.insert(1.0, "Connection lost")
-    text.pack()
-    btn.pack()
+#if connected:
+#    btn = ttk.Button(text="Сделать снимок", state="enabled", command=click_button)
+#    text = Text(width=20, height=3, bg="white", fg='black', wrap=WORD)
+#    text.insert(1.0, "Connection enabled")
+#    text.pack()
+#    btn.pack()
+
+btn = ttk.Button(text="Сделать снимок", state="disabled", command=click_button)
+text = Text(width=20, height=3, bg="white", fg='black', wrap=WORD)
+text.insert(1.0, "Пожалуйста, подключите камеру")
+text.pack()
+btn.pack()
 
 btn_connect = ttk.Button(text="Установить соединение с камерой", state="enabled", command=connect)
 btn_connect.pack()
