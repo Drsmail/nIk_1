@@ -11,21 +11,22 @@ import cv2
 # TODO 5.Правильно скомпоновать проект и сделать установочный exe файл
 
 def click_button():
-    text = Text(width=7, height=5, fg='black', wrap=WORD)
-    text.insert(1.0, f"Clicks {clicks}")
+    global cap
+    global id
     ret, frame = cap.read()
-    cv2.imwrite('photo.jpeg', frame)
-    cap.release()
+    cv2.imwrite(f'photo{id}.jpeg', frame)
+    id = id + 1;
 
 def connect():
     global  connected
+    global  cap
     cap = cv2.VideoCapture(0)
     connected = cap.isOpened()
     update()
 
 def update():
     if connected:
-        btn.state(["enabled"])
+        btn.state(["!disabled"])
         text.insert(1.0, "Connection enabled")
         text.pack()
         btn.pack()
@@ -35,7 +36,8 @@ def update():
         text.pack()
         btn.pack()
 
-
+id = 0
+cap = None;
 root = Tk()
 root.title("Снимок для камеры Hiwatch")
 root.geometry("500x250")
@@ -62,3 +64,5 @@ btn_connect = ttk.Button(text="Установить соединение с ка
 btn_connect.pack()
 
 root.mainloop()
+
+cap.release() # disconect cam
